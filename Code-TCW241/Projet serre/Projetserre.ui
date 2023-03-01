@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ProjetserreClass</class>
+ <widget class="QMainWindow" name="ProjetserreClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>681</width>
+    <height>563</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Projetserre</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QPushButton" name="btnConnect">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>80</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Connection</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="nlblConnect">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>130</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Status :</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="nlblDonnees">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>240</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>données</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblConnect">
+    <property name="geometry">
+     <rect>
+      <x>346</x>
+      <y>130</y>
+      <width>221</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Deconnecte</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnDConnect">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>80</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Deconnection</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnDonnees">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>260</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Collecte</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="nlblTemp">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>220</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Température :</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblTemp">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>220</y>
+      <width>151</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="nlblHumid">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>280</y>
+      <width>51</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Humidité :</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblHumid">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>280</y>
+      <width>171</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>681</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="Projetserre.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>btnDConnect</sender>
+   <signal>clicked()</signal>
+   <receiver>ProjetserreClass</receiver>
+   <slot>onDisconnectButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>399</x>
+     <y>140</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>461</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnConnect</sender>
+   <signal>clicked()</signal>
+   <receiver>ProjetserreClass</receiver>
+   <slot>onConnectButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>221</x>
+     <y>138</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>134</x>
+     <y>136</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnDonnees</sender>
+   <signal>clicked()</signal>
+   <receiver>ProjetserreClass</receiver>
+   <slot>AffichageDonnees()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>305</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>68</x>
+     <y>324</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onConnectButtonClicked()</slot>
+  <slot>onDisconnectButtonClicked()</slot>
+  <slot>AffichageDonnees()</slot>
+ </slots>
+</ui>
