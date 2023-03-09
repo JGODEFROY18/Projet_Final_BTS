@@ -8,8 +8,8 @@
 class CalculJson
 {
 	float QByteArrayToFloat(QByteArray arr);
-public:
-	
+
+public:	
 	QJsonValue valeurJson(QByteArray,char);
 	float calculHumidite(int);
 };

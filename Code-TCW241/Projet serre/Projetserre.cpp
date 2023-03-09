@@ -14,7 +14,7 @@ Projetserre::Projetserre(QWidget* parent)
 	{
 		qDebug() << "Server WebSocket: Nouvelle connexion sur le port 12345" << "\n";
 
-		QObject::connect(wSocketServer, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
+		QObject::connect(wSocketServer, SIGNAL(newConnection()), this, SLOT(wSocketConnected()));
 	}
 	else
 	{
@@ -25,14 +25,6 @@ Projetserre::Projetserre(QWidget* parent)
 
 Projetserre::~Projetserre()
 {
-}
-
-void Projetserre::onNewConnection()
-{
-	wSocket = this->wSocketServer->nextPendingConnection();
-	QObject::connect(wSocket, SIGNAL(textMessageReceived(const QString&)), this, SLOT(processTextMessage(const QString&)));
-	QObject::connect(wSocket, SIGNAL(disconnected()), this, SLOT(wSocketDisconnected()));
-
 }
 
 void Projetserre::onConnectButtonClicked()
@@ -57,12 +49,17 @@ void Projetserre::onSocketDisconnected()
 	ui.lblConnect->setText("Deconnecte");
 }
 
-void Projetserre::wSocketDisconnected()
+void Projetserre::wSocketConnected()
 {
-	qDebug()<< "WebSocket Deconnecte";
+	wSocket = this->wSocketServer->nextPendingConnection();
+	qDebug() << "Nouvelle connection";
 }
 
-void Projetserre::AffichageDonnees()
+void Projetserre::wSocketDisconnected()
+{
+}
+
+void Projetserre::DonneesSensor()
 {
 	if (socket->state() == QAbstractSocket::ConnectedState) {
 		char trame[] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x11, 0x03, 0x4D, 0x58, 0x00, 0x04 };
@@ -72,23 +69,59 @@ void Projetserre::AffichageDonnees()
 	}
 }
 
+void Projetserre::DonneesCapteurs()
+{
+	if (socket->state() == QAbstractSocket::ConnectedState) {
+		//description =  4268 en 64 octet; valeur = 445C
+		char trame[] = { 0x00, 0x02, 0x00, 0x00, 0x00, 0x06, 0x11, 0x03, 0x44, 0x5C, 0x00, 0x08 };
+		QByteArray data(trame, 12);
+		socket->write(data);
+		socket->flush();
+	}
+}
+
 void Projetserre::receiveData()
 {
+	CalculJson calc;
 	QByteArray data = socket->readAll();
-	data = data.right(8);//prend les 8 derniers caracteres
-	QByteArray temp = data.left(4);//prend les 4 premiers caracteres
-	QByteArray humid = data.right(4);
-	donneesJson.insert("Humidité", calc.valeurJson(temp,'H'));
-	donneesJson.insert("TempInt", calc.valeurJson(humid,'T'));
-	sendWebsocket();
+	char test = data[1];
+	if (test == 1) {
+		data = data.right(8);//prend les 8 derniers caracteres
+		QByteArray temp = data.left(4);//prend les 4 premiers caracteres
+		QByteArray humid = data.right(4);
+		donneesJson.insert("HumidInt", calc.valeurJson(humid, 'H'));
+		donneesJson.insert("TempInt", calc.valeurJson(temp, 'T'));
+		ui.lblHumid->setText(donneesJson.value("HumidInt").toString());
+		ui.lblTemp->setText(donneesJson.value("TempInt").toString());
+	}
+	else if (test == 2) {
+		data = data.right(16);//prend les 8 derniers caracteres
+		qDebug() << data;
+		QByteArray humids1 = data.left(4);//prend les 4 premiers caracteres
+		data.remove(0, 4);
+		qDebug() << data;
+		QByteArray humids2 = data.left(4);
+		data.remove(0, 4);
+		qDebug() << data;
+		QByteArray humids3 = data.left(4);
+		QByteArray val4 = data.right(4);
+		donneesJson.insert("HumidSol1", calc.valeurJson(humids1, 'H'));
+		donneesJson.insert("HumidSol2", calc.valeurJson(humids2, 'H'));
+		donneesJson.insert("HumidSol3", calc.valeurJson(humids3, 'H'));
+		donneesJson.insert("Valeur4", calc.valeurJson(val4, 'D'));
+		ui.lblHumid_2->setText(donneesJson.value("HumidSol1").toString());
+		ui.lblHumid_3->setText(donneesJson.value("HumidSol2").toString());
+		ui.lblHumid_4->setText(donneesJson.value("HumidSol3").toString());
+	}
+	if(wSocket != nullptr) sendWebsocket();
 }
 
 void Projetserre::sendWebsocket()
 {
 	QJsonDocument doc(donneesJson);
+	qDebug() << doc;
 	QByteArray docsend = doc.toJson();
 	QString data(docsend);
-	qDebug() << data;
 	wSocket->sendTextMessage(data);
 }
 

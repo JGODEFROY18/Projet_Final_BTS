@@ -27,15 +27,15 @@ public slots:
 	void onDisconnectButtonClicked();
 	void onSocketConnected();
 	void onSocketDisconnected();
-	void AffichageDonnees();
+	void wSocketConnected();
+	void wSocketDisconnected();
+	void DonneesSensor();
+	void DonneesCapteurs();
 	void receiveData();
 	void sendWebsocket();
-	void onNewConnection();
-	void wSocketDisconnected();
 
 private:
 	//void problemes();
-	CalculJson calc;
     Ui::ProjetserreClass ui;
 	QTcpSocket* socket;
 	QString ip = "192.168.65.8";

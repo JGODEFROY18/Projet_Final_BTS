@@ -20,12 +20,14 @@ QJsonValue CalculJson::valeurJson(QByteArray arr, char car)
 	QString affichage;
 	switch (car) {
 	case 'T':
-		affichage = QString::number(val) + "�C";
+		affichage = QString::number(double(val), 'f', 1) + 0xB0 + "C"; // 0xB0 = '°'
+		//affiche la valeur avec une décimale
 		break;
 	case 'H':
-		affichage = QString::number(val) + "%";
+		affichage = QString::number(double(val), 'f', 1) + "%";
 		break;
 	default:
+		affichage = QString::number(double(val), 'f', 1);
 		return 0;
 	}
 	QJsonValue valeur(affichage);
