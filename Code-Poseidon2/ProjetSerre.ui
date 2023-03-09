@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ProjetSerreClass</class>
+ <widget class="QMainWindow" name="ProjetSerreClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>659</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>ProjetSerre</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QPushButton" name="BtnConnexion">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>30</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Se connecter</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="BtnTemperature">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>110</y>
+      <width>131</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Afficher la température </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelConnexion">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>40</y>
+      <width>131</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Etat: ...</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelTemperature">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>110</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Temperature : </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelStatus">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>170</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Statut: </string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>659</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="ProjetSerre.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>BtnConnexion</sender>
+   <signal>clicked()</signal>
+   <receiver>ProjetSerreClass</receiver>
+   <slot>onConnectButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>160</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>BtnTemperature</sender>
+   <signal>clicked()</signal>
+   <receiver>ProjetSerreClass</receiver>
+   <slot>onDisplayTemperatureClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>185</x>
+     <y>158</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onConnectButtonClicked()</slot>
+  <slot>onDisplayTemperatureClicked()</slot>
+ </slots>
+</ui>
