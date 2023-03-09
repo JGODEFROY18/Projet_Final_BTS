@@ -42,10 +42,11 @@ include "classes/User.php"; ?>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="accueil.php">Home</a></li>
+          <li><a href="table.php">Tableau</a></li>
+          <li><a href="graph.php">Graphique</a></li>
           <li><a href="modification.php">Compte</a></li>
           <li><a href="Admin.php">Admin</a></li>
           <li><a href="fonctions/deconnexion.php">Deconnexion</a></li>
-          <li><a href="map.php">Map</a></li>
         </ul>
       </div>
     </div>
@@ -64,7 +65,7 @@ include "classes/User.php"; ?>
   ?>
     <div>
       <form class="box" method="post">
-        <h1 class="box-title">Modiffication</h1>
+        <h1 class="box-title">Modification</h1>
         <input type="text" class="box-input" name="txtUser" placeholder="Nom d'utilisateur" required>
         <input type="password" class="box-input" name="pwdUser" placeholder="Mot de passe" required>
         <button type="submit" class="box-button" name="btnConnexion" value="Connexion">modification</button>

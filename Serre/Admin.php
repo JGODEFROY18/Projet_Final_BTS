@@ -42,6 +42,8 @@ include "classes/User.php"; ?>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="accueil.php">Home</a></li>
+          <li><a href="table.php">Tableau</a></li>
+          <li><a href="graph.php">Graphique</a></li>
           <li><a href="modification.php">Compte</a></li>
           <li><a href="Admin.php">Admin</a></li>
           <li><a href="fonctions/deconnexion.php">Deconnexion</a></li>

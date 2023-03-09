@@ -1,0 +1,4 @@
+Message from server  {
+    "Humidité": "21.75%",
+    "TempInt": "4.575°C"
+}
