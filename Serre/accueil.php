@@ -13,8 +13,7 @@
   <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic%7CRaleway:400,300,700"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic%7CRaleway:400,300,700" rel="stylesheet">
 
   <!-- Bootstrap CSS File -->
   <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -25,7 +24,6 @@
 </head>
 
 <body data-spy="scroll" data-offset="0" data-target="#navigation">
-
   <!-- Fixed navbar -->
   <div id="navigation" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -40,6 +38,8 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="accueil.php">Home</a></li>
+          <li><a href="table.php">Tableau</a></li>
+          <li><a href="graph.php">Graphique</a></li>
           <li><a href="modification.php">Compte</a></li>
           <li><a href="Admin.php">Admin</a></li>
           <li><a href="fonctions/deconnexion.php">Deconnexion</a></li>
@@ -53,34 +53,16 @@
       <div class="container">
         <div class="row centered">
           <div class="col-lg-12">
-          <img class="Logo-lapro" src="img/favicon.png" alt="">
+            <img class="Logo-lapro" src="img/favicon.png" alt="">
             <h1>Bienvenue sur le site de <b>la Serre</b></h1>
             <h3>Le site Web qui permet aux usagers de
               visionner les informations en provenance de la serre !</h3>
             <br>
             <img class="serre" src="img/serre.png" alt="">
           </div>
-
-          <!--<div class="col-lg-2">
-            <h5>Lowrence ! </h5>
-            <p>La plupart des écrans Lowrance sont dotés d'écrans SolarMax haute résolution non-IPS avec une clarté et
-              des couleurs exceptionnelles.</p>
-          </div>
-          <div class="col-lg-8">
-            <img class="img-responsive" src="img/app-bg.png" alt="">
-          </div>
-          <div class="col-lg-2">
-            <br>
-            <img class="hidden-xs hidden-sm hidden-md" src="img/arrow2.png" alt="">
-            <h5>Positionement GPS</h5>
-            <p>Nous allons traiter le site Web qui permet aux usagers de visionner les informations en provenance de la
-              station M56i. Nous nous attacherons à ne traiter que les données de Positionement GPS.</p>
-          </div>
+          <!--/ .container -->
         </div>
-      </div>-->
-      <!--/ .container -->
-    </div>
-    <!--/ #headerwrap -->
+        <!--/ #headerwrap -->
   </section>
 
   <section id="desc">
@@ -132,11 +114,6 @@
         </div>
       </div>
     </section>
-    <div id="copyrights">
-      <div class="credits">
-        Created with Visual studio by Jules Godefroy
-      </div>
-    </div>
 
     <!-- JavaScript Libraries -->
     <script src="lib/jquery/jquery.min.js"></script>
