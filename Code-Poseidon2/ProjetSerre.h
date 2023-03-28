@@ -24,3 +24,4 @@ private:
     Ui::ProjetSerreClass ui;
     QTcpSocket* socket;
 };
+ //socket
