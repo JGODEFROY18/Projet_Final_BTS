@@ -37,7 +37,6 @@ void WebSocket::envoi()
 {
 	createJson();
 	QJsonDocument doc(donneesJson);
-	qDebug() << doc;
 	QByteArray docsend = doc.toJson();
 	QString data(docsend);
 	if (wSocket != nullptr) wSocket->sendTextMessage(data);
