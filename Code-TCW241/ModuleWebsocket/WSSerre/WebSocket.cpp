@@ -26,11 +26,14 @@ void WebSocket::wSocketConnected()
 
 void WebSocket::createJson()
 {
-	donneesJson.insert("HumidInt", rand() % 100);
-	donneesJson.insert("TempInt", rand() % 100);
-	donneesJson.insert("HumidSol1", rand() % 100);
-	donneesJson.insert("HumidSol2", rand() % 100);
-	donneesJson.insert("HumidSol3", rand() % 100);
+    donneesJson.insert("ConsoElec", rand() % 100);
+    donneesJson.insert("ConsoEau", rand() % 100);
+    donneesJson.insert("TempInt", rand() % 100);
+    donneesJson.insert("HumidInt", rand() % 100);
+    donneesJson.insert("TempExt", rand() % 100);
+    donneesJson.insert("HumidSol1", rand() % 100);
+    donneesJson.insert("HumidSol2", rand() % 100);
+    donneesJson.insert("HumidSol3", rand() % 100);
 }
 
 void WebSocket::envoi()
