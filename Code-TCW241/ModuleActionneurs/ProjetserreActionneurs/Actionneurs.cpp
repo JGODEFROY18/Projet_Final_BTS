@@ -1,12 +1,12 @@
 #include "Actionneurs.h"
 
-Actionneurs::Actionneurs(QWidget *parent)
-    : QMainWindow(parent)
+Actionneurs::Actionneurs(QWidget* parent)
+	: QMainWindow(parent)
 {
-    ui.setupUi(this);
-    client = new QModbusTcpClient(this);
-    client->setConnectionParameter(QModbusDevice::NetworkAddressParameter, ip);
-    client->setConnectionParameter(QModbusDevice::NetworkPortParameter, port);
+	ui.setupUi(this);
+	client = new QModbusTcpClient(this);
+	client->setConnectionParameter(QModbusDevice::NetworkAddressParameter, ip);
+	client->setConnectionParameter(QModbusDevice::NetworkPortParameter, port);
 	if (!client->connectDevice()) {
 		qDebug("connection ratee");
 	}
@@ -61,72 +61,88 @@ void Actionneurs::actiondel()
 
 void Actionneurs::Relay1ON()
 {
-	Relay1.setValue(100, 65280);
-	reponse = client->sendWriteRequest(Relay1, 1);
-	if (!reponse->isFinished())
+	QModbusRequest request(QModbusRequest::WriteSingleCoil,
+		QByteArray::fromHex("0064 FF00"));
+	reponse = client->sendRawRequest(request, 100);
+	if (!reponse->isFinished()) {
 		connect(reponse, SIGNAL(finished()), this, SLOT(actiondel()));
-	ui.lblStatus1->setText("Status : ON");
+		ui.lblStatus1->setText("Status : ON");
+	}
 }
 
 void Actionneurs::Relay2ON()
 {
-	Relay1.setValue(101, 0xFF00);
-	reponse = client->sendWriteRequest(Relay2, 1);
-	if (!reponse->isFinished())
+	QModbusRequest request(QModbusRequest::WriteSingleCoil,
+		QByteArray::fromHex("0065 FF00"));
+	reponse = client->sendRawRequest(request, 101);
+	if (!reponse->isFinished()) {
 		connect(reponse, SIGNAL(finished()), this, SLOT(actiondel()));
-	ui.lblStatus2->setText("Status : ON");
+		ui.lblStatus2->setText("Status : ON");
+	}
 }
 
 void Actionneurs::Relay3ON()
 {
-	Relay1.setValue(102, 0xFF00);
-	reponse = client->sendWriteRequest(Relay3, 1);
-	if (!reponse->isFinished())
+	QModbusRequest request(QModbusRequest::WriteSingleCoil,
+		QByteArray::fromHex("0066 FF00"));
+	reponse = client->sendRawRequest(request, 102);
+	if (!reponse->isFinished()) {
 		connect(reponse, SIGNAL(finished()), this, SLOT(actiondel()));
-	ui.lblStatus3->setText("Status : ON");
+		ui.lblStatus3->setText("Status : ON");
+	}
 }
 
 void Actionneurs::Relay4ON()
 {
-	Relay1.setValue(103, 0xFF00);
-	reponse = client->sendWriteRequest(Relay4, 1);
-	if (!reponse->isFinished())
+	QModbusRequest request(QModbusRequest::WriteSingleCoil,
+		QByteArray::fromHex("0067 FF00"));
+	reponse = client->sendRawRequest(request, 103);
+	if (!reponse->isFinished()) {
 		connect(reponse, SIGNAL(finished()), this, SLOT(actiondel()));
-	ui.lblStatus4->setText("Status : ON");
+		ui.lblStatus4->setText("Status : ON");
+	}
 }
 
 void Actionneurs::Relay1OFF()
 {
-	Relay1.setValue(100, 0x0000);
-	reponse = client->sendWriteRequest(Relay1, 1);
-	if (!reponse->isFinished())
+	QModbusRequest request(QModbusRequest::WriteSingleCoil,
+		QByteArray::fromHex("0064 0000"));
+	reponse = client->sendRawRequest(request, 100);
+	if (!reponse->isFinished()) {
 		connect(reponse, SIGNAL(finished()), this, SLOT(actiondel()));
-	ui.lblStatus1->setText("Status : OFF");
+		ui.lblStatus1->setText("Status : OFF");
+	}
 }
 
 void Actionneurs::Relay2OFF()
 {
-	Relay1.setValue(101, 0x0000);
-	reponse = client->sendWriteRequest(Relay2, 1);
-	if (!reponse->isFinished())
+	QModbusRequest request(QModbusRequest::WriteSingleCoil,
+		QByteArray::fromHex("0065 0000"));
+	reponse = client->sendRawRequest(request, 101);
+	if (!reponse->isFinished()) {
 		connect(reponse, SIGNAL(finished()), this, SLOT(actiondel()));
-	ui.lblStatus2->setText("Status : OFF");
+		ui.lblStatus2->setText("Status : OFF");
+	}
 }
 
 void Actionneurs::Relay3OFF()
 {
-	Relay1.setValue(102, 0x0000);
-	reponse = client->sendWriteRequest(Relay3, 1);
-	if (!reponse->isFinished())
+	QModbusRequest request(QModbusRequest::WriteSingleCoil,
+		QByteArray::fromHex("0066 0000"));
+	reponse = client->sendRawRequest(request, 102);
+	if (!reponse->isFinished()) {
 		connect(reponse, SIGNAL(finished()), this, SLOT(actiondel()));
-	ui.lblStatus3->setText("Status : OFF");
+		ui.lblStatus3->setText("Status : OFF");
+	}
 }
 
 void Actionneurs::Relay4OFF()
 {
-	Relay1.setValue(103, 0x0000);
-	reponse = client->sendWriteRequest(Relay4, 1);
-	if (!reponse->isFinished())
+	QModbusRequest request(QModbusRequest::WriteSingleCoil,
+		QByteArray::fromHex("0067 0000"));
+	reponse = client->sendRawRequest(request, 103);
+	if (!reponse->isFinished()) {
 		connect(reponse, SIGNAL(finished()), this, SLOT(actiondel()));
-	ui.lblStatus4->setText("Status : OFF");
+		ui.lblStatus4->setText("Status : OFF");
+	}
 }

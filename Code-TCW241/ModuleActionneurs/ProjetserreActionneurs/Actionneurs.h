@@ -3,6 +3,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QModbusTcpClient>
 #include <QModbusReply>
+#include <QModbusRequest>
 #include "ui_Actionneurs.h"
 
 class Actionneurs : public QMainWindow
