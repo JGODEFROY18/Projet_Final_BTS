@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ProjetserreClass</class>
- <widget class="QMainWindow" name="ProjetserreClass">
+ <class>CapteursClass</class>
+ <widget class="QMainWindow" name="CapteursClass">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Projetserre</string>
+   <string>Capteurs</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QPushButton" name="btnConnect">
@@ -254,6 +254,19 @@
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QLabel" name="lblError">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>170</y>
+      <width>241</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -277,13 +290,13 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="Projetserre.qrc"/>
+  <include location="Capteurs.qrc"/>
  </resources>
  <connections>
   <connection>
    <sender>btnDConnect</sender>
    <signal>clicked()</signal>
-   <receiver>ProjetserreClass</receiver>
+   <receiver>CapteursClass</receiver>
    <slot>onDisconnectButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -299,7 +312,7 @@
   <connection>
    <sender>btnConnect</sender>
    <signal>clicked()</signal>
-   <receiver>ProjetserreClass</receiver>
+   <receiver>CapteursClass</receiver>
    <slot>onConnectButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -315,7 +328,7 @@
   <connection>
    <sender>btnDonnees</sender>
    <signal>clicked()</signal>
-   <receiver>ProjetserreClass</receiver>
+   <receiver>CapteursClass</receiver>
    <slot>DonneesSensor()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -331,7 +344,7 @@
   <connection>
    <sender>btnDonnees_2</sender>
    <signal>clicked()</signal>
-   <receiver>ProjetserreClass</receiver>
+   <receiver>CapteursClass</receiver>
    <slot>DonneesCapteurs()</slot>
    <hints>
     <hint type="sourcelabel">

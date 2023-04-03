@@ -1,16 +1,15 @@
 #pragma once
 #include <QtWidgets/QMainWindow>
-#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
 
 class CalculJson
 {
-	float QByteArrayToFloat(QByteArray arr);
+	float quintToFloat(quint16*);
+	float calculHumidite(float);
 
 public:	
-	QJsonValue valeurJson(QByteArray,char);
-	float calculHumidite(int);
+	QJsonValue valeurJson(quint16*,char,bool);
 };
 
