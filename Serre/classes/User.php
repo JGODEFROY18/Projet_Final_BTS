@@ -69,4 +69,12 @@
         $requete = "DELETE FROM `User` WHERE `Login` = '" . $login . "' AND `MDP` = '" . $passwd . "'";
         $this->Base->query($requete);
     }
+    public function getallUtilisateur() {
+        $requete = "SELECT * FROM `User`";
+        $resultat = $this->Base->query($requete);
+        return $resultat->fetchAll(PDO::FETCH_ASSOC);
+        /* la fonction fetchAll permet de récupérer toutes les données dans un tableau de tableau
+        Le paramètre PDO::FETCH_ASSOC permet d’obtenir des tableaux avec uniquement les noms entrés dans la base de données
+        (le paramètre par défaut ajoutant des colonnes numérotées aux données reçues.) */
+    }
 }
