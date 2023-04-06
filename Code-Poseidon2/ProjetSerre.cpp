@@ -7,11 +7,13 @@ ProjetSerre::ProjetSerre(QWidget *parent)
     socket = new QTcpSocket(this);
     QObject::connect(socket, SIGNAL(connected()), this, SLOT(onSocketConnected()));
     QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(onSocketDisconnected()));
-    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(receptionTrame()));
+    //QObject::connect(socket, SIGNAL(connected()), this, SLOT(receptionTrame()));
 }
 
 ProjetSerre::~ProjetSerre()
 {}
+
+int compteur = 0;
 
 void ProjetSerre::onConnectButtonClicked()
 {
@@ -33,45 +35,139 @@ void ProjetSerre::onSocketReadyRead()
     ui.labelStatus->setText("Statut: Donnees recues");
 }
 
-void ProjetSerre::onDisplayTemperatureClicked()
+
+void ProjetSerre::onGetLevelClicked()
 {
-    if (socket->state() == QAbstractSocket::ConnectedState) {
-
-        // Définition d'une trame Modbus TCP de 12 octets à envoyer au serveur
-        char trame[] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x02, 0x04, 0x00, 0x64, 0x00, 0x01 };
-
-        // Création d'un tableau de bytes contenant la trame
-        QByteArray data(trame, 12);
-
-        // Envoi de la trame au serveur
-        socket->write(data);
-
-        // Vide le tampon de sortie de la socket
-        socket->flush();
+    //char trame[] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x11, 0x02, 0x00, 0x63, 0x00, 0x04 }; pour lire l'entrée 1 à 4
+    // entrée 1 uniquement char trame[] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x11, 0x02, 0x00, 0x63, 0x00, 0x01 };
+    
+    //Trame de lecture pour l'entrée 1 d'adresse 199 (63 en hexa 
+    char trame[] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x11, 0x02, 0x00, 0x63, 0x00, 0x01 };
+    QByteArray trameEnvoi(trame, 12);
+    socket->write(trameEnvoi);
+    QByteArray data = socket->readAll();
+    //Obtenir un pointeur vers les données sous-jacentes
+    char* rawData = data.data();
+    int dataSize = data.size();
+    char lastByte = rawData[dataSize - 1];
+    //ui.labelNiveau->setText(QString::number(lastByte, 16));
+    int lastByteInt = static_cast<int>(lastByte);
+    if (lastByteInt == 1) {
+    ui.labelNiveau->setText("Niveau : suffisant");
     }
+    else if(lastByteInt == 0) {
+        ui.labelNiveau->setText("Niveau : insuffisant");
+    }
+}
+
+void ProjetSerre::onDisplayDebitClicked()
+{
+    //Décalage au niveau des adresses IN1=201, IN2=203, IN4=207 ici débit est sur IN4
+    char trame[] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x11, 0x04, 0x00, 0xCF, 0x00, 0x01 };
+    QByteArray trameEnvoi(trame, 12);
+    socket->write(trameEnvoi);
+    QByteArray data = socket->readAll();
+    //Obtenir un pointeur vers les données sous-jacentes
+    char* rawData = data.data();
+    int dataSize = data.size();
+    QByteArray lastTwoBytes(rawData + dataSize - 2, 2);
+    int decimalValue = QString::fromLatin1(lastTwoBytes.toHex()).toInt(nullptr, 16);
+    ui.labelDebit->setText(QString::number(decimalValue));
 }
 
 
 void ProjetSerre::receptionTrame() 
 {
-    QByteArray data = socket->readAll();
-    data = data.right(2);
-    static_assert(std::numeric_limits<float>::is_iec559, "Only supports IEC 559 (IEEE 754) float");
+    char trame[] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x11, 0x02, 0x00, 0x66, 0x00, 0x01 };
+    QByteArray trameEnvoi(trame, 12);
+    socket->write(trameEnvoi);
+    QByteArray data1 = socket->readAll();
+    // Obtenir un pointeur vers les données sous-jacentes
+    char* rawData = data1.data();
+    int dataSize = data1.size();
+    char lastByte = rawData[dataSize - 1];
+    //int lastByteInt = static_cast<int>(lastByte);
+    //ui.labelDebit->setText(QString::number(lastByte, 16));
+    int lastByteInt = static_cast<int>(lastByte);
 
-    quint32 temp = ((quint8)data[0] << 24) | ((quint8)data[1] << 16) | 0 ;
+    while (lastByteInt == 1) {
+        compteur++;
+    }
+    QString texte = QString::number(compteur);
+    ui.labelDebit->setText(texte);
+}
 
-    //La variable temp est un entier de 32 bits, arr est un tableau de 4 cases d'entiers de 8 bits.
-    //En partant de la fin, le programme place arr[0] au bit 24 puis arr[0] au bit 16 puis arr[0] au bit 8 et arr[0] au bit 0
+void ProjetSerre::onDisplayTemperatureClicked()
+{
 
-    float* out = reinterpret_cast<float*>(&temp);
-    //le compilateur va forcer la transformation d'un quint32 en float
-    
-    QString temperature;
-    temperature.setNum(*out);
-    
-    ui.labelTemperature->setText(temperature);
-    //return *out;
+}
+
+void ProjetSerre::onRelayOnClicked()
+{
+    //eau courante - on NO1
+    char trame[] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x11, 0x05, 0x00, 0xC7, 0xFF, 0x00 };
+
+    QByteArray trameRelay1(trame, 12);
+
+    socket->write(trameRelay1);
+}
+
+void ProjetSerre::onRelayOffClicked()
+{
+    //eau de pluie - off NC1
+    char trame[] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x11, 0x05, 0x00, 0xC7, 0x00, 0x00 };
+
+    QByteArray trameRelay1(trame, 12);
+
+    socket->write(trameRelay1);
+}
+
+void ProjetSerre::activatePompe()
+{
+    // fonction 5 (correspond au type dans la doc)  on : FF00 et off : 0000
+    char trame[] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x11, 0x05, 0x00, 0xC8, 0xFF, 0x00 };
+
+    QByteArray trameRelay2(trame, 12);
+
+    socket->write(trameRelay2);
+}
+
+void ProjetSerre::EteindrePompe()
+{
+    char trame[] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x11, 0x05, 0x00, 0xC8, 0x00, 0x00 };
+
+    QByteArray trameRelay2(trame, 12);
+
+    socket->write(trameRelay2);
 }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

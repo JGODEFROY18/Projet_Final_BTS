@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="BtnConnexion">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>30</y>
+      <x>40</x>
+      <y>10</y>
       <width>101</width>
       <height>31</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QPushButton" name="BtnTemperature">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>110</y>
+      <x>10</x>
+      <y>90</y>
       <width>131</width>
       <height>31</height>
      </rect>
@@ -43,8 +43,8 @@
    <widget class="QLabel" name="labelConnexion">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>40</y>
+      <x>200</x>
+      <y>20</y>
       <width>131</width>
       <height>21</height>
      </rect>
@@ -56,8 +56,8 @@
    <widget class="QLabel" name="labelTemperature">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>110</y>
+      <x>20</x>
+      <y>130</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -69,14 +69,118 @@
    <widget class="QLabel" name="labelStatus">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>170</y>
+      <x>20</x>
+      <y>180</y>
       <width>161</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>Statut: </string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="BtnEPluie">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>280</y>
+      <width>111</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Eau Pluie (NC1)</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="BtnECourante">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>280</y>
+      <width>121</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Eau courante (NO1)</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="BtnPompeOn">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>280</y>
+      <width>101</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Activer Pompe</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="BtnPompeOff">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>270</y>
+      <width>91</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Eteindre Pompe</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="BtnDebit">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>100</y>
+      <width>91</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Débitmètre</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="BtnNiveau">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>100</y>
+      <width>101</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Niveau d'eau </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelNiveau">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>140</y>
+      <width>121</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Niveau: </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelDebit">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>140</y>
+      <width>131</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Débit: </string>
     </property>
    </widget>
   </widget>
@@ -137,9 +241,111 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>BtnECourante</sender>
+   <signal>clicked()</signal>
+   <receiver>ProjetSerreClass</receiver>
+   <slot>onRelayOnClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>415</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>BtnEPluie</sender>
+   <signal>clicked()</signal>
+   <receiver>ProjetSerreClass</receiver>
+   <slot>onRelayOffClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>190</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>BtnPompeOn</sender>
+   <signal>clicked()</signal>
+   <receiver>ProjetSerreClass</receiver>
+   <slot>activatePompe()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>310</x>
+     <y>303</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>BtnPompeOff</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>ProjetSerreClass</receiver>
+   <slot>EteindrePompe()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>460</x>
+     <y>304</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>BtnNiveau</sender>
+   <signal>clicked()</signal>
+   <receiver>ProjetSerreClass</receiver>
+   <slot>onGetLevelClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>430</x>
+     <y>144</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>BtnDebit</sender>
+   <signal>clicked()</signal>
+   <receiver>ProjetSerreClass</receiver>
+   <slot>onDisplayDebitClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>265</x>
+     <y>144</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onConnectButtonClicked()</slot>
   <slot>onDisplayTemperatureClicked()</slot>
+  <slot>onRelayOnClicked()</slot>
+  <slot>onRelayOffClicked()</slot>
+  <slot>activatePompe()</slot>
+  <slot>EteindrePompe()</slot>
+  <slot>onGetLevelClicked()</slot>
+  <slot>onDisplayDebitClicked()</slot>
  </slots>
 </ui>
