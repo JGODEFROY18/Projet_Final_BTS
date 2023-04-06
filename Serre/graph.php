@@ -20,8 +20,8 @@
 
     <!-- Main Stylesheet File -->
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/TCP.css" rel="stylesheet">
-    <script type="text/javascript" src="js/recupdonnees.js"> </script>
+    
+    <script type="text/javascript" ></script>
 </head>
 
 <body data-spy="scroll" data-offset="0" data-target="#navigation">
@@ -122,7 +122,7 @@
     <script src="lib/php-mail-form/validate.js"></script>
     <script src="lib/easing/easing.min.js"></script>
 
-    <script>
+    <!<script>
         setInterval(getDonnees, 1000);
     </script>
 
