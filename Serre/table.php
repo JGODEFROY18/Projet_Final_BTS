@@ -20,21 +20,58 @@
 
   <!-- Main Stylesheet File -->
   <link href="css/style.css" rel="stylesheet">
-  <link href="css/TCP.css" rel="stylesheet">
-  <script type="text/javascript" src="js/recupdonnees.js"> </script>
+  <script type="text/javascript"> </script>
 </head>
 
 <body data-spy="scroll" data-offset="0" data-target="#navigation">
-<script>
-    const socket = new WebSocket('ws://192.168.64.93:12345');
+  <script>
+    //const socket = new WebSocket('ws://192.168.64.179:12345');
+    //const socket = new WebSocket('ws://192.168.64.93:12345');
+    const socket = new WebSocket('ws://192.168.64.215:12345');
 
     socket.onopen = function(event) {
       socket.send('Hello Server!');
     };
 
     socket.onmessage = function(event) {
-      console.log('Message from server ', event.data);
+      // On parse la chaîne JSON en objet JavaScript
+      const data = JSON.parse(event.data);
+      // On affiche la valeur de la propriété "ma_valeur" de l'objet
+      console.log('Ma valeur : ', data.HumidInt);
+      // On peut également afficher la valeur sur la page web
+      var div = document.getElementById('capHumInt');
+      div.innerHTML = data.HumidInt;
+
+      console.log('Ma valeur : ', data.TempInt);
+      div = document.getElementById('capTempInt');
+      div.innerHTML = data.TempInt;
+
+      console.log('Ma valeur : ', data.HumidSol1);
+      div = document.getElementById('capHumBac1');
+      div.innerHTML = data.HumidSol1;
+
+      console.log('Ma valeur : ', data.HumidSol2);
+      div = document.getElementById('capHumBac2');
+      div.innerHTML = data.HumidSol2;
+
+      console.log('Ma valeur : ', data.HumidSol3);
+      div = document.getElementById('capHumBac3');
+      div.innerHTML = data.HumidSol3;
+
+      console.log('Ma valeur : ', data.TempExt);
+      div = document.getElementById('capTempExt');
+      div.innerHTML = data.TempExt;
+
+      console.log('Ma valeur : ', data.ConsoElec);
+      div = document.getElementById('consoElec');
+      div.innerHTML = data.ConsoElec;
+
+      console.log('Ma valeur : ', data.ConsoEau);
+      div = document.getElementById('consoEau');
+      div.innerHTML = data.ConsoEau;
+
     };
+
 
     socket.onerror = function(error) {
       console.error('WebSocket Error: ', error);
@@ -43,6 +80,26 @@
     socket.onclose = function(event) {
       console.log('WebSocket Closed with code: ', event.code);
     };
+
+    async function getDateFromTimeService() {
+      try {
+        const response = await fetch('https://worldtimeapi.org/api/ip');
+        const data = await response.json();
+        const date = new Date(data.datetime);
+        const options = {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        };
+        const dateDuJour = date.toLocaleDateString('fr-FR', options);
+        document.getElementById('date').textContent = dateDuJour;
+      } catch (error) {
+        console.error('Erreur lors de la récupération de la date depuis le service de temps :', error);
+      }
+    }
+
+    getDateFromTimeService();;
   </script>
   <!-- Fixed navbar -->
   <div id="navigation" class="navbar navbar-default navbar-fixed-top">
@@ -63,7 +120,7 @@
           <li><a href="modification.php">Compte</a></li>
           <li><a href="Admin.php">Admin</a></li>
           <li><a href="fonctions/deconnexion.php">Deconnexion</a></li>
-        </ul> 
+        </ul>
       </div>
     </div>
   </div>
@@ -75,7 +132,7 @@
           <div class="col-lg-12">
             <h3><b>Tableau de données</b></h3>
           </div>
-
+          <div id="ma_div"></div>
           <div class="col-lg-12">
             <h3><b>DONNÉE EN TEMPS RÉELLE</b></h3>
             <table border="10">
@@ -84,11 +141,11 @@
                 <th>Data</th>
               </tr>
               <tr>
-                <td>Consomation Electrique</td>
+                <td>Consommation Electrique</td>
                 <td id="consoElec"></td>
               </tr>
               <tr>
-                <td>Consomation Eau </td>
+                <td>Consommation Eau </td>
                 <td id="consoEau"></td>
               </tr>
               <tr>
@@ -100,8 +157,8 @@
                 <td id="capTempInt"></td>
               </tr>
               <tr>
-                <td>Capteur Humdité Exterieur</td>
-                <td id="capHumExt"></td>
+                <td>Capteur Température Exterieur</td>
+                <td id="capTempExt"></td>
               </tr>
               <tr>
                 <td>Capteur Humdité Bac 1</td>
@@ -156,9 +213,9 @@
   <script src="lib/php-mail-form/validate.js"></script>
   <script src="lib/easing/easing.min.js"></script>
 
-  <script>
+  <!--<script>
     setInterval(getDonnees, 1000);
-  </script>
+  </script>-->
 
   <!-- Template Main Javascript File -->
   <script src="js/main.js"></script>
