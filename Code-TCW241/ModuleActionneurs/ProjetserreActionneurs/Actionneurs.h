@@ -31,8 +31,6 @@ public slots:
 private:
     Ui::ActionneursClass ui;
 	QModbusTcpClient* client;
-	QString ip = "192.168.65.8";
-	quint16 port = 502;
 	QModbusReply* reponse = nullptr;
 	QModbusDevice::Error err = QModbusDevice::NoError;
 	QModbusDataUnit Relay1 = QModbusDataUnit(QModbusDataUnit::Coils, 100, 1);

@@ -1,0 +1,15 @@
+Serveur C++ :   en continu, comparer les valeurs des capteurs avec celles du fichier.
+                    Si la température est trop basse :
+                        Allumer le chauffage jusqu'à avoir atteint la consigne.
+                    Sinon si la température est trop haute :
+                        Ouvrir la fenetre jusqu'à avoir atteint la consigne.
+                    Si un seul des capteurs d'humidité au sol indique une valeur basse :
+                        Ouvrir l'electrovanne de brumisation jusqu'à avoir atteint la consigne.
+                    Sinon si plusieurs capteurs d'humidité au sol indique une valeur basse :
+                        Ouvrir l'electrovanne d'arrosage jusqu'à avoir atteint la consigne.
+
+Serveur C++ :   lire un fichier de config et envoyer les valeurs de température min et max, d'humidité ambiante min et max et d'humidité au sol min au serveur Web.
+Serveur Web :   recupérer les valeurs et les afficher sur le site Web.
+Site Web    :   changer si besoin les valeurs de température min et max, d'humidité ambiante min et max et d'humidité au sol min.
+Serveur Web :   envoyer ces valeurs au serveur C++.
+Serveur C++ :   recupérer ces valeurs et les stocker dans un fichier.

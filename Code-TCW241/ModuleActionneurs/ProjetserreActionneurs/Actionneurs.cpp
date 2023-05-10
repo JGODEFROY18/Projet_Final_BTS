@@ -5,8 +5,8 @@ Actionneurs::Actionneurs(QWidget* parent)
 {
 	ui.setupUi(this);
 	client = new QModbusTcpClient(this);
-	client->setConnectionParameter(QModbusDevice::NetworkAddressParameter, ip);
-	client->setConnectionParameter(QModbusDevice::NetworkPortParameter, port);
+	client->setConnectionParameter(QModbusDevice::NetworkAddressParameter, "192.168.65.8");
+	client->setConnectionParameter(QModbusDevice::NetworkPortParameter, 502);
 	if (!client->connectDevice()) {
 		qDebug("connection ratee");
 	}
@@ -61,8 +61,7 @@ void Actionneurs::actiondel()
 
 void Actionneurs::Relay1ON()
 {
-	QModbusRequest request(QModbusRequest::WriteSingleCoil,
-		QByteArray::fromHex("0064 FF00"));
+	QModbusRequest request(QModbusRequest::WriteSingleCoil,QByteArray::fromHex("0064 FF00"));
 	reponse = client->sendRawRequest(request, 100);
 	if (!reponse->isFinished()) {
 		connect(reponse, SIGNAL(finished()), this, SLOT(actiondel()));
@@ -72,8 +71,7 @@ void Actionneurs::Relay1ON()
 
 void Actionneurs::Relay2ON()
 {
-	QModbusRequest request(QModbusRequest::WriteSingleCoil,
-		QByteArray::fromHex("0065 FF00"));
+	QModbusRequest request(QModbusRequest::WriteSingleCoil,QByteArray::fromHex("0065 FF00"));
 	reponse = client->sendRawRequest(request, 101);
 	if (!reponse->isFinished()) {
 		connect(reponse, SIGNAL(finished()), this, SLOT(actiondel()));
@@ -83,8 +81,7 @@ void Actionneurs::Relay2ON()
 
 void Actionneurs::Relay3ON()
 {
-	QModbusRequest request(QModbusRequest::WriteSingleCoil,
-		QByteArray::fromHex("0066 FF00"));
+	QModbusRequest request(QModbusRequest::WriteSingleCoil,QByteArray::fromHex("0066 FF00"));
 	reponse = client->sendRawRequest(request, 102);
 	if (!reponse->isFinished()) {
 		connect(reponse, SIGNAL(finished()), this, SLOT(actiondel()));
@@ -94,8 +91,7 @@ void Actionneurs::Relay3ON()
 
 void Actionneurs::Relay4ON()
 {
-	QModbusRequest request(QModbusRequest::WriteSingleCoil,
-		QByteArray::fromHex("0067 FF00"));
+	QModbusRequest request(QModbusRequest::WriteSingleCoil,QByteArray::fromHex("0067 FF00"));
 	reponse = client->sendRawRequest(request, 103);
 	if (!reponse->isFinished()) {
 		connect(reponse, SIGNAL(finished()), this, SLOT(actiondel()));
@@ -105,8 +101,7 @@ void Actionneurs::Relay4ON()
 
 void Actionneurs::Relay1OFF()
 {
-	QModbusRequest request(QModbusRequest::WriteSingleCoil,
-		QByteArray::fromHex("0064 0000"));
+	QModbusRequest request(QModbusRequest::WriteSingleCoil,QByteArray::fromHex("0064 0000"));
 	reponse = client->sendRawRequest(request, 100);
 	if (!reponse->isFinished()) {
 		connect(reponse, SIGNAL(finished()), this, SLOT(actiondel()));
@@ -116,8 +111,7 @@ void Actionneurs::Relay1OFF()
 
 void Actionneurs::Relay2OFF()
 {
-	QModbusRequest request(QModbusRequest::WriteSingleCoil,
-		QByteArray::fromHex("0065 0000"));
+	QModbusRequest request(QModbusRequest::WriteSingleCoil,QByteArray::fromHex("0065 0000"));
 	reponse = client->sendRawRequest(request, 101);
 	if (!reponse->isFinished()) {
 		connect(reponse, SIGNAL(finished()), this, SLOT(actiondel()));
@@ -127,8 +121,7 @@ void Actionneurs::Relay2OFF()
 
 void Actionneurs::Relay3OFF()
 {
-	QModbusRequest request(QModbusRequest::WriteSingleCoil,
-		QByteArray::fromHex("0066 0000"));
+	QModbusRequest request(QModbusRequest::WriteSingleCoil,QByteArray::fromHex("0066 0000"));
 	reponse = client->sendRawRequest(request, 102);
 	if (!reponse->isFinished()) {
 		connect(reponse, SIGNAL(finished()), this, SLOT(actiondel()));
@@ -138,8 +131,7 @@ void Actionneurs::Relay3OFF()
 
 void Actionneurs::Relay4OFF()
 {
-	QModbusRequest request(QModbusRequest::WriteSingleCoil,
-		QByteArray::fromHex("0067 0000"));
+	QModbusRequest request(QModbusRequest::WriteSingleCoil,QByteArray::fromHex("0067 0000"));
 	reponse = client->sendRawRequest(request, 103);
 	if (!reponse->isFinished()) {
 		connect(reponse, SIGNAL(finished()), this, SLOT(actiondel()));
