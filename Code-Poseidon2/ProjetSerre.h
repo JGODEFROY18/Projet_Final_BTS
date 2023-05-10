@@ -7,7 +7,6 @@
 #include <QDataStream>
 #include <QLabel>
 
-//#include <wiringPi.h>
 
 class ProjetSerre : public QMainWindow
 {
@@ -29,7 +28,7 @@ public slots:
     void onSocketReadyRead();
     void onGetLevelClicked();
     void onDisplayDebitClicked();
-    void receptionTrame();
+    //void receptionTrame();
 
 private:
     Ui::ProjetSerreClass ui;

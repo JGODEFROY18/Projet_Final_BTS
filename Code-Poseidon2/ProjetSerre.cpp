@@ -13,7 +13,7 @@ ProjetSerre::ProjetSerre(QWidget *parent)
 ProjetSerre::~ProjetSerre()
 {}
 
-int compteur = 0;
+bool niveau = false;
 
 void ProjetSerre::onConnectButtonClicked()
 {
@@ -53,6 +53,7 @@ void ProjetSerre::onGetLevelClicked()
     //ui.labelNiveau->setText(QString::number(lastByte, 16));
     int lastByteInt = static_cast<int>(lastByte);
     if (lastByteInt == 1) {
+        niveau = true;
     ui.labelNiveau->setText("Niveau : suffisant");
     }
     else if(lastByteInt == 0) {
@@ -73,29 +74,16 @@ void ProjetSerre::onDisplayDebitClicked()
     QByteArray lastTwoBytes(rawData + dataSize - 2, 2);
     int decimalValue = QString::fromLatin1(lastTwoBytes.toHex()).toInt(nullptr, 16);
     ui.labelDebit->setText(QString::number(decimalValue));
-}
 
-
-void ProjetSerre::receptionTrame() 
-{
-    char trame[] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x11, 0x02, 0x00, 0x66, 0x00, 0x01 };
-    QByteArray trameEnvoi(trame, 12);
+    // remettre le compteur à 0 
+    /*
+    char trame[] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x0B, 0x11, 0x10, 0x00, 0xCF, 0x00, 0x01, 0x02, 0x00, 0x00, 0x00, 0x00 };
+    QByteArray trameEnvoi(trame, 17);
     socket->write(trameEnvoi);
-    QByteArray data1 = socket->readAll();
-    // Obtenir un pointeur vers les données sous-jacentes
-    char* rawData = data1.data();
-    int dataSize = data1.size();
-    char lastByte = rawData[dataSize - 1];
-    //int lastByteInt = static_cast<int>(lastByte);
-    //ui.labelDebit->setText(QString::number(lastByte, 16));
-    int lastByteInt = static_cast<int>(lastByte);
-
-    while (lastByteInt == 1) {
-        compteur++;
-    }
-    QString texte = QString::number(compteur);
-    ui.labelDebit->setText(texte);
+    */
 }
+
+// di na bind daal: 11 02 00 C4 00 16 BAA9 heure bi na gaaw diot way li yagg na ba eupp 
 
 void ProjetSerre::onDisplayTemperatureClicked()
 {
@@ -124,12 +112,14 @@ void ProjetSerre::onRelayOffClicked()
 
 void ProjetSerre::activatePompe()
 {
+    if (niveau == true){
     // fonction 5 (correspond au type dans la doc)  on : FF00 et off : 0000
     char trame[] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x11, 0x05, 0x00, 0xC8, 0xFF, 0x00 };
 
     QByteArray trameRelay2(trame, 12);
 
     socket->write(trameRelay2);
+    }
 }
 
 void ProjetSerre::EteindrePompe()
