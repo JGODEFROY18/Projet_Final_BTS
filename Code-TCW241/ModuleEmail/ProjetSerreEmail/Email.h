@@ -1,17 +1,6 @@
 #pragma once
-#include <QtCore>
-#include <QCoreApplication>
-#include <QObject>
-
-#include <QTcpSocket>
-#include <QString>
-#include <QTextStream>
-#include <QDebug>
-#include <QAbstractSocket>
 #include <QDateTime>
-#include <QDate>
-#include <QLocale>
-#include <QObject>
+#include <QTextCodec>
 #include <QTcpSocket>
 
 /*
@@ -50,18 +39,12 @@ private slots:
     
 private:
     bool isconnect;
-    QString smtphost;
-    QString smtpusername;
-    QString smtppass;
-    QString message;
-    QString output;
-    QString RemoteServerName;
-    QString mailstatus;
-    QTextStream* t;
     QTcpSocket* smtpsocket;
-    QString from;
-    QString rcpt;
-    QString response;
+    QTextStream* t;
+    QString message, output, RemoteServerName;
+    QString smtphost, smtpusername, smtppass;
+    QString from, rcpt, response;
+    QString mailstatus;
     QString sendLineAndGrab(QString senddata);
     int Timeout;
     QString encodeBase64(QString xml);

@@ -2,11 +2,11 @@
 
 Email::Email(QString smtphost, QString smtpusername, QString smtppass)
 {
-    qDebug() << "### Class Smtp start";
     this->smtphost = smtphost;
     this->smtpusername = smtpusername;
     this->smtppass = smtppass;
 }
+
 void Email::setConfig(QString smtphost, QString smtpusername, QString smtppass)
 {
     this->smtphost = smtphost;
@@ -26,7 +26,7 @@ void Email::send(const QString& from, const QString& to, const QString& subject,
 
     message = TimeStampMail() + "\n";
     message.append("User-Agent: Mozilla Thunderbird 1.0.6 (Macintosh/20050716)\n");
-    message.append("X-Accept-Language: zh_CN, zh_CN\n");
+    message.append("X-Accept-Language: fr-FR, fr-CA\n");
     message.append("MIME-Version: 1.0\n");
     message.append("To: " + to + "\n");
     message.append("From: " + from + " <" + from + ">\n");
@@ -42,7 +42,7 @@ void Email::send(const QString& from, const QString& to, const QString& subject,
     connect(this, SIGNAL(sendLine()), this, SLOT(putSendLine()));
     if (smtphost.size() > 0)
     {
-        smtpsocket->connectToHost("smtp.gmail.com", 25);
+        smtpsocket->connectToHost("smtp.gmail.com", 465);
         qDebug() << "meh";
     }
     else
@@ -75,10 +75,8 @@ void Email::readLiner()
         t = new QTextStream(smtpsocket);
         t->setCodec(codecx);
 
-        int loops = 0;
         while (!t->atEnd())
         {
-            loops++;
             response = t->readLine();
         }
         if (response.size() > 0)
@@ -101,7 +99,6 @@ void Email::readLiner()
 }
 
 Email::~Email()
-
 {
 }
 
