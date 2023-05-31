@@ -22,6 +22,6 @@ private:
 
     QJsonObject donneesJson;
     QJsonValue valeur;
-    QUrl url = QUrl("http://192.168.64.158/Serre/fonctions/test.php");
+    QUrl url = QUrl("http://192.168.64.158/Serre/api/INSERT.php");
     QNetworkAccessManager* mgr = new QNetworkAccessManager();
 };
