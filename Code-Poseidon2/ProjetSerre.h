@@ -1,36 +1,47 @@
 #pragma once
-
-#include <QtWidgets/QMainWindow>
+#include <QtCore/QCoreApplication>
 #include <QTcpSocket>
-#include "ui_ProjetSerre.h"
-#include <QtNetwork>
-#include <QDataStream>
-#include <QLabel>
+#include <QTimer>
+#include "WebSocket.h"
 
-
-class ProjetSerre : public QMainWindow
+class ProjetSerre : public QObject
 {
-    Q_OBJECT
-        QTcpSocket* socket;
+	Q_OBJECT
+
 public:
-    ProjetSerre(QWidget *parent = nullptr);
-    ~ProjetSerre();
+	ProjetSerre(QObject* parent = Q_NULLPTR);
+	~ProjetSerre();
+
 
 public slots:
-    void onConnectButtonClicked();
-    void onSocketConnected();
-    void onSocketDisconnected();
-    void onDisplayTemperatureClicked();
-    void onRelayOnClicked();
-    void onRelayOffClicked();
-    void activatePompe();
-    void EteindrePompe();
-    void onSocketReadyRead();
-    void onGetLevelClicked();
-    void onDisplayDebitClicked();
-    //void receptionTrame();
+	void socketConnected();
+	void socketDisconnected();
+
+	void trameTemperature();
+	void trameLevel();
+	void trameDebit();
+	void resetCounterDebit(); 
+	void handleCardSentence();
+	void envoiWebSocket();
+
+	void activatePump();
+	void stopPump();
+	void eauPluie();
+	void eauCourante(); 
+
+	void reseauEau();
 
 private:
-    Ui::ProjetSerreClass ui;
-    
+	QTcpSocket* socket;
+	QString ip = "192.168.65.10";
+	quint16 port = 502;
+	QTimer* chrono;
+	WebSocket WebSocket;
+	QJsonObject jsonObject;
+
+	bool level;
+	float temperature;
+	bool eau; //eau de pluie->true et eau courante->false
+
+	int state; //pour l'envoi des trames de lecture des capteurs 
 };

@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{202C9F1B-4716-465D-98F7-A6EF36918E92}</ProjectGuid>
+    <ProjectGuid>{E6C329BC-E9E3-4221-A280-74A9F64EDBE6}</ProjectGuid>
     <Keyword>QtVS_v304</Keyword>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0.19041.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0.19041.0</WindowsTargetPlatformVersion>
@@ -32,12 +32,12 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>5.14.2_msvc2017</QtInstall>
-    <QtModules>core;gui;serialbus;widgets;network</QtModules>
+    <QtModules>core;gui;network;serialbus;websockets</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
     <QtInstall>5.14.2_msvc2017</QtInstall>
-    <QtModules>core;gui;widgets</QtModules>
+    <QtModules>core</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
@@ -66,7 +66,7 @@
       <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -78,22 +78,22 @@
       <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <QtRcc Include="ProjetSerre.qrc" />
-    <QtUic Include="ProjetSerre.ui" />
-    <QtMoc Include="ProjetSerre.h" />
-    <ClCompile Include="ProjetSerre.cpp" />
+    <ClCompile Include="BDD.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ProjetSerre.cpp" />
+    <ClCompile Include="WebSocket.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="resource.h" />
+    <QtMoc Include="ProjetSerre.h" />
+    <QtMoc Include="WebSocket.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="ProjetSerre.rc" />
+    <QtMoc Include="BDD.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

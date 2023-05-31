@@ -23,32 +23,28 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="ProjetSerre.qrc">
-      <Filter>Resource Files</Filter>
-    </QtRcc>
-    <QtUic Include="ProjetSerre.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtMoc Include="ProjetSerre.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <ClCompile Include="ProjetSerre.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ProjetSerre.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WebSocket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BDD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="resource.h">
+    <QtMoc Include="ProjetSerre.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="ProjetSerre.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
+    </QtMoc>
+    <QtMoc Include="WebSocket.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="BDD.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>
