@@ -12,6 +12,7 @@ Serveur::Serveur()
 	donneesTemp = QModbusDataUnit(QModbusDataUnit::InputRegisters, 100, 1);
 	donneesLevel = QModbusDataUnit(QModbusDataUnit::DiscreteInputs, 99, 1);
 	donneesDebit = QModbusDataUnit(QModbusDataUnit::InputRegisters, 207, 1);
+    relayEau = QModbusDataUnit(QModbusDataUnit::Coils, 200, 1);
 	tcw = new TCW241(params);
 	pos = new Poseidon2(params);
 	chrono1 = new QTimer();
@@ -184,11 +185,25 @@ void Serveur::trameLevel()
 	else
 		donneesJson.insert("NiveauEau", "Insuffisant");
 	reponsecapt4->deleteLater();
-	reponsecapt5 = client2->sendReadRequest(donneesDebit, 3);
-	if (!reponsecapt5->isFinished()) {
-		connect(reponsecapt5, SIGNAL(finished()), this, SLOT(trameDebit()));
-	}
+	reponserelay = client2->sendReadRequest(relayEau, 3);
+    if (!reponserelay->isFinished()) {
+        connect(reponserelay, SIGNAL(finished()), this, SLOT(chercheEau()));
+    }
 }
+
+void Serveur::chercheEau()
+{
+    QModbusDataUnit donnees = reponserelay->result();
+    if (donnees.value(0) == 1)
+        eau = true; //eau de pluie utilisee
+    else 
+        eau = false; //eau du reseau utilisee
+    reponsecapt5 = client2->sendReadRequest(donneesDebit, 3);
+    if (!reponsecapt5->isFinished()) {
+        connect(reponsecapt5, SIGNAL(finished()), this, SLOT(trameDebit()));
+    }
+}
+
 
 void Serveur::trameDebit()
 {

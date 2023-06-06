@@ -1,5 +1,5 @@
 #include "Poseidon2.h"
-//définition des Transaction_ID pour chaque trame de lecture (2e octet de la trame)
+//definition des Transaction_ID pour chaque trame de lecture (2e octet de la trame)
 #define DEBIT_ID 0x01
 #define TEMPERATURE_ID 0x02 
 #define LEVEL_ID 0x03
@@ -48,14 +48,14 @@ void Poseidon2::trameDebit()
 	socket->write(trameEnvoiDeb);
 }
 
-//méthode pour la réception des données des différents capteurs
+//methode pour la reception des donnees des differents capteurs
 void Poseidon2::handleCardSentence()
 {
 	QByteArray dataTemp = socket->readAll();
-	//Obtenir un pointeur vers les données sous-jacentes
+	//Obtenir un pointeur vers les donnees sous-jacentes
 	char* rawData = dataTemp.data();
 	int dataSize = dataTemp.size();
-	// Température :
+	// Temperature :
 	if (rawData[1] == TEMPERATURE_ID)
 	{
 		QByteArray lastTwoBytesTemp(rawData + dataSize - 2, 2);
@@ -63,7 +63,7 @@ void Poseidon2::handleCardSentence()
 		float Temperature = decimalValueTemp / 10;
 		qDebug() << "Temperature exterieure :" << Temperature;
 	}
-	// Débit :
+	// Debit :
 	else if (rawData[1] == DEBIT_ID)
 	{
 		QByteArray lastTwoBytesDeb(rawData + dataSize - 2, 2);
