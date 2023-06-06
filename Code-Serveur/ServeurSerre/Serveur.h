@@ -1,6 +1,6 @@
 #pragma once
-#include "TCW241.h"
-#include "Poseidon2.h"
+#include "tcw241.h"
+#include "poseidon2.h"
 #include <QtCore/QCoreApplication>
 #include <QtDebug>
 #include <QJsonDocument>
@@ -30,6 +30,7 @@ public slots:
     void DataCapteurs();
     void trameTemperature();
     void trameLevel();
+    void chercheEau();
     void trameDebit();
 
 private:
@@ -49,11 +50,11 @@ private:
     //chrono pour le WebSocket
     QTimer* chrono2;
     //variable contenant l'ip et le port des cartes E/S
-    QModbusClient* client1, * client2;
+    QModbusTcpClient* client1, * client2;
     //Variable utilisee pour l'envoi en BDD
     QNetworkAccessManager* mgr = new QNetworkAccessManager();
     //variable contenant le type de registre, l'adresse Modbus et le nombre d'octet ou de bits a obtenir/modifier.
-    QModbusDataUnit donneesBacs, donneesSensor, donneesTemp, donneesLevel, donneesDebit;
+    QModbusDataUnit donneesBacs, donneesSensor, donneesTemp, donneesLevel, donneesDebit, relayEau;
     //variable contenant les reponses avec les donnees des capteurs
     QModbusReply* reponsecapt1 = nullptr, * reponsecapt2 = nullptr, * reponsecapt3 = nullptr, * reponsecapt4 = nullptr, * reponsecapt5 = nullptr;
     QModbusReply* reponserelay = nullptr;

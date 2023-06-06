@@ -18,7 +18,7 @@ public:
     ~Poseidon2();
 
 public slots:
-    
+
     void resetCounterDebit();
     void handleCardSentence();
     void trameTemperature();
@@ -27,16 +27,14 @@ public slots:
     void eauPluie();
     void eauCourante();
     void reseauEau();
-    
+
 
 private:
     QTcpSocket* socket;
     bool level;
     float temperature;
     int state;
-    bool eau;
     void trameLevel();
     void trameDebit();
-    //eau de pluie->true et eau courante->false
+    bool eau;//eau de pluie->true et eau courante->false
 };
-

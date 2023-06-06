@@ -1,10 +1,8 @@
 #include "tcw241.h"
 
-TCW241::TCW241(QSettings* params)
+TCW241::TCW241(QModbusTcpClient* cli)
 {
-    client = new QModbusTcpClient(this);
-    client->setConnectionParameter(QModbusDevice::NetworkAddressParameter, params->value("TCW241/ip").toString());
-    client->setConnectionParameter(QModbusDevice::NetworkPortParameter, params->value("TCW241/port").toInt());
+    client = cli;
     Relay1 = QModbusDataUnit(QModbusDataUnit::Coils, 100, 1);
     Relay2 = QModbusDataUnit(QModbusDataUnit::Coils, 101, 1);
     Relay3 = QModbusDataUnit(QModbusDataUnit::Coils, 102, 1);

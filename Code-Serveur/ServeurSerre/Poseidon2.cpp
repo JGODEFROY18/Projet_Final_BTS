@@ -1,18 +1,19 @@
 #include "Poseidon2.h"
+
 //definition des Transaction_ID pour chaque trame de lecture (2e octet de la trame)
 #define DEBIT_ID 0x01
-#define TEMPERATURE_ID 0x02 
+#define TEMPERATURE_ID 0x02
 #define LEVEL_ID 0x03
 
 Poseidon2::Poseidon2(QSettings* params)
 {
-	socket = new QTcpSocket(this);
-	socket->connectToHost(params->value("Poseidon2/ip").toString(), params->value("Poseidon2/port").toInt());
-	state = 0;
-	QObject::connect(socket, &QTcpSocket::readyRead, this, &Poseidon2::handleCardSentence);
-	eau = false;
-	level = false;
-	temperature = 0.0f;
+    socket = new QTcpSocket(this);
+    socket->connectToHost(params->value("Poseidon2/ip").toString(), params->value("Poseidon2/port").toInt());
+    state = 0;
+    QObject::connect(socket, &QTcpSocket::readyRead, this, &Poseidon2::handleCardSentence);
+    eau = false;
+    level = false;
+    temperature = 0.0f;
 }
 
 Poseidon2::~Poseidon2()
@@ -25,73 +26,73 @@ void Poseidon2::resetCounterDebit()
     QByteArray trameEnvoi(trame, 17);
     socket->write(trameEnvoi);
 }
-//envoi de la trame de lecture 
+//envoi de la trame de lecture
 void Poseidon2::trameTemperature()
 {
-	char trameTemp[] = { 0x00, TEMPERATURE_ID, 0x00, 0x00, 0x00, 0x06, 0x11, 0x04, 0x00, 0x64, 0x00, 0x01 };
-	QByteArray trameEnvoiTemp(trameTemp, 12);
-	socket->write(trameEnvoiTemp);
+    char trameTemp[] = { 0x00, TEMPERATURE_ID, 0x00, 0x00, 0x00, 0x06, 0x11, 0x04, 0x00, 0x64, 0x00, 0x01 };
+    QByteArray trameEnvoiTemp(trameTemp, 12);
+    socket->write(trameEnvoiTemp);
 
 }
 
 void Poseidon2::trameLevel()
 {
-	char trameNiv[] = { 0x00, LEVEL_ID, 0x00, 0x00, 0x00, 0x06, 0x11, 0x02, 0x00, 0x63, 0x00, 0x01 };
-	QByteArray trameEnvoiNiv(trameNiv, 12);
-	socket->write(trameEnvoiNiv);
+    char trameNiv[] = { 0x00, LEVEL_ID, 0x00, 0x00, 0x00, 0x06, 0x11, 0x02, 0x00, 0x63, 0x00, 0x01 };
+    QByteArray trameEnvoiNiv(trameNiv, 12);
+    socket->write(trameEnvoiNiv);
 }
 
 void Poseidon2::trameDebit()
 {
-	char trameDeb[] = { 0x00, DEBIT_ID, 0x00, 0x00, 0x00, 0x06, 0x11, 0x04, 0x00, static_cast<char>(0xCF), 0x00, 0x01 };
-	QByteArray trameEnvoiDeb(trameDeb, 12);
-	socket->write(trameEnvoiDeb);
+    char trameDeb[] = { 0x00, DEBIT_ID, 0x00, 0x00, 0x00, 0x06, 0x11, 0x04, 0x00, static_cast<char>(0xCF), 0x00, 0x01 };
+    QByteArray trameEnvoiDeb(trameDeb, 12);
+    socket->write(trameEnvoiDeb);
 }
 
 //methode pour la reception des donnees des differents capteurs
 void Poseidon2::handleCardSentence()
 {
-	QByteArray dataTemp = socket->readAll();
-	//Obtenir un pointeur vers les donnees sous-jacentes
-	char* rawData = dataTemp.data();
-	int dataSize = dataTemp.size();
-	// Temperature :
-	if (rawData[1] == TEMPERATURE_ID)
-	{
-		QByteArray lastTwoBytesTemp(rawData + dataSize - 2, 2);
-		float decimalValueTemp = QString::fromLatin1(lastTwoBytesTemp.toHex()).toInt(nullptr, 16);
-		float Temperature = decimalValueTemp / 10;
-		qDebug() << "Temperature exterieure :" << Temperature;
-	}
-	// Debit :
-	else if (rawData[1] == DEBIT_ID)
-	{
-		QByteArray lastTwoBytesDeb(rawData + dataSize - 2, 2);
-		int decimalValueDeb = QString::fromLatin1(lastTwoBytesDeb.toHex()).toInt(nullptr, 16);
-		if (eau == true) {
-			qDebug() << "Conso Eau de pluie :" << decimalValueDeb;
-		}
-		else if (eau == false)
-		{
-			qDebug() << "Conso Eau courante :" << decimalValueDeb;
-		}
-		else
-		{
-			qDebug() << "Conso d'eau :" << decimalValueDeb;
-		}
-	}
-	// Niveau :
-	else if (rawData[1] == LEVEL_ID)
-	{
-		char lastByteNiv = rawData[dataSize - 1];
-		int lastByteInt = static_cast<int>(lastByteNiv);
-		if (lastByteInt == 1) {
-			this->level = true;
-		}
-		else if (lastByteInt == 0) {
-			this->level = false;
-		}
-	}
+    QByteArray dataTemp = socket->readAll();
+    //Obtenir un pointeur vers les donnees sous-jacentes
+    char* rawData = dataTemp.data();
+    int dataSize = dataTemp.size();
+    // Temperature :
+    if (rawData[1] == TEMPERATURE_ID)
+    {
+        QByteArray lastTwoBytesTemp(rawData + dataSize - 2, 2);
+        float decimalValueTemp = QString::fromLatin1(lastTwoBytesTemp.toHex()).toInt(nullptr, 16);
+        float Temperature = decimalValueTemp / 10;
+        qDebug() << "Temperature exterieure :" << Temperature;
+    }
+    // Debit :
+    else if (rawData[1] == DEBIT_ID)
+    {
+        QByteArray lastTwoBytesDeb(rawData + dataSize - 2, 2);
+        int decimalValueDeb = QString::fromLatin1(lastTwoBytesDeb.toHex()).toInt(nullptr, 16);
+        if (eau == true) {
+            qDebug() << "Conso Eau de pluie :" << decimalValueDeb;
+        }
+        else if (eau == false)
+        {
+            qDebug() << "Conso Eau courante :" << decimalValueDeb;
+        }
+        else
+        {
+            qDebug() << "Conso d'eau :" << decimalValueDeb;
+        }
+    }
+    // Niveau :
+    else if (rawData[1] == LEVEL_ID)
+    {
+        char lastByteNiv = rawData[dataSize - 1];
+        int lastByteInt = static_cast<int>(lastByteNiv);
+        if (lastByteInt == 1) {
+            this->level = true;
+        }
+        else if (lastByteInt == 0) {
+            this->level = false;
+        }
+    }
 }
 
 void Poseidon2::activatePump()
@@ -147,7 +148,7 @@ void Poseidon2::reseauEau()
     }
     else if (level != true || temperature < 3)
     {
-		stopPump();
+        stopPump();
         resetCounterDebit();
         eauCourante();
         qDebug() << "Activation du reseau d'eau courante";

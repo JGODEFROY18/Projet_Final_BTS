@@ -6,13 +6,14 @@
 #include <QModbusTcpClient>
 #include <QModbusReply>
 #include <QSettings>
+#include <math.h>
 
 class TCW241 : public QObject
 {
     Q_OBJECT
 
 public:
-    TCW241(QSettings*);
+    TCW241(QModbusTcpClient*);
     ~TCW241();
     QJsonValue valeurJson(quint16*, char);
 
@@ -31,7 +32,7 @@ public slots:
 private:
     QJsonObject donneesJson;
     QModbusTcpClient* client;
-    //variables contenant le type de registre, l'adresse Modbus et le nombre d'octet ou de bits à obtenir/modifier.
+    //variables contenant le type de registre, l'adresse Modbus et le nombre d'octet ou de bits a obtenir/modifier.
     QModbusDataUnit Relay1, Relay2, Relay3, Relay4;
     QModbusReply* reponseact = nullptr;
     float calculHumidite(float);
