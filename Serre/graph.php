@@ -25,25 +25,7 @@
 </head>
 
 <body data-spy="scroll" data-offset="0" data-target="#navigation">
-<script>
-    const socket = new WebSocket('ws://192.168.64.93:12345');
 
-    socket.onopen = function(event) {
-      socket.send('Hello Server!');
-    };
-
-    socket.onmessage = function(event) {
-      console.log('Message from server ', event.data);
-    };
-
-    socket.onerror = function(error) {
-      console.error('WebSocket Error: ', error);
-    };
-
-    socket.onclose = function(event) {
-      console.log('WebSocket Closed with code: ', event.code);
-    };
-  </script>
     <!-- Fixed navbar -->
     <div id="navigation" class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -122,9 +104,9 @@
     <script src="lib/php-mail-form/validate.js"></script>
     <script src="lib/easing/easing.min.js"></script>
 
-    <!<script>
+    <!--<script>
         setInterval(getDonnees, 1000);
-    </script>
+    </script-->
 
     <!-- Template Main Javascript File -->
     <script src="js/main.js"></script>

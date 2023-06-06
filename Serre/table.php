@@ -26,16 +26,14 @@
 <body data-spy="scroll" data-offset="0" data-target="#navigation">
   <script>
     //const socket = new WebSocket('ws://192.168.64.179:12345');
-    //const socket = new WebSocket('ws://192.168.64.93:12345');
-    const socket = new WebSocket('ws://192.168.64.215:12345');
-
-    socket.onopen = function(event) {
-      socket.send('Hello Server!');
-    };
+    const socket = new WebSocket('ws://192.168.64.97:12345');
+    //const socket = new WebSocket('ws://192.168.64.215:12345');
+    //const socket = new WebSocket('ws://192.168.65.32:12345');
 
     socket.onmessage = function(event) {
       // On parse la chaîne JSON en objet JavaScript
       const data = JSON.parse(event.data);
+
       // On affiche la valeur de la propriété "ma_valeur" de l'objet
       console.log('Ma valeur : ', data.HumidInt);
       // On peut également afficher la valeur sur la page web
@@ -66,9 +64,17 @@
       div = document.getElementById('consoElec');
       div.innerHTML = data.ConsoElec;
 
-      console.log('Ma valeur : ', data.ConsoEau);
-      div = document.getElementById('consoEau');
-      div.innerHTML = data.ConsoEau;
+      console.log('Ma valeur : ', data.ConsoEauPluie);
+      div = document.getElementById('consoEauPluie');
+      div.innerHTML = data.ConsoEauPluie;
+
+      console.log('Ma valeur : ', data.ConsoEauCourante);
+      div = document.getElementById('consoEauCourante');
+      div.innerHTML = data.ConsoEauCourante;
+
+      console.log('Ma valeur : ', data.NiveauEau);
+      div = document.getElementById('NiveauEau');
+      div.innerHTML = data.NiveauEau;
 
     };
 
@@ -145,8 +151,16 @@
                 <td id="consoElec"></td>
               </tr>
               <tr>
-                <td>Consommation Eau </td>
-                <td id="consoEau"></td>
+                <td>Consommation Eau de Pluie</td>
+                <td id="consoEauPluie"></td>
+              </tr>
+              <tr>
+                <td>Consommation Eau Courante</td>
+                <td id="consoEauCourante"></td>
+              </tr>
+              <tr>
+                <td>Niveau Eau</td>
+                <td id="NiveauEau"></td>
               </tr>
               <tr>
                 <td>Capteur Humdité Intérieur</td>

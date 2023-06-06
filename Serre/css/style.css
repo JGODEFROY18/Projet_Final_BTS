@@ -5,6 +5,15 @@
 *  License: https://templatemag.com/license/
 */
 
+button{
+  font-size: x-large; 
+  display: block;
+  margin: auto;
+  margin-bottom: 40px;
+  color:red;
+  
+}
+
 body {
   background-color: #f2f2f2;
   font-family: "Lato";

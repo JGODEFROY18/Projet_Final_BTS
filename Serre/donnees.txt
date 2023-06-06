@@ -2,3 +2,19 @@ Message from server  {
     "Humidité": "21.75%",
     "TempInt": "4.575°C"
 }
+
+Ouverture Fenétre : 
+Etat ouvert = "8"
+Etat Fermé = "1"
+
+Ouverture Arrosage :
+Etat ouvert = "2"
+Etat Fermé = "3"
+
+Allumer Chauffage :
+Etat ouvert = "4"
+Etat Fermé = "5"
+
+Activation Brumisation : 
+Etat ouvert = "6"
+Etat Fermé = "7"

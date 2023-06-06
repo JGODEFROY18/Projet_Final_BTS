@@ -13,7 +13,8 @@
   <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic%7CRaleway:400,300,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic%7CRaleway:400,300,700"
+    rel="stylesheet">
 
   <!-- Bootstrap CSS File -->
   <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -56,13 +57,16 @@
             <img class="Logo-lapro" src="img/favicon.png" alt="">
             <h1>Bienvenue sur le site de <b>la Serre</b></h1>
             <h3>Le site Web qui permet aux usagers de
-              visionner les informations en provenance de la serre !</h3>
+              visionner les informations en provenance de la serre !
+            </h3>
             <br>
             <img class="serre" src="img/serre.png" alt="">
           </div>
           <!--/ .container -->
         </div>
-        <!--/ #headerwrap -->
+      </div>
+      <!--/ #headerwrap -->
+    </div>
   </section>
 
   <section id="desc">

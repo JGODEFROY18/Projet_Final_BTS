@@ -6,7 +6,7 @@ include "classes/User.php"; ?>
 
 <head>
   <meta charset="utf-8">
-  <title>Le GPS - GPS Localisation</title>
+  <title>SITE | Modification</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
   <meta content="" name="description">
@@ -55,6 +55,115 @@ include "classes/User.php"; ?>
     <div id="headerwrap">
       <div class="container">
         <div class="row centered">
+          <script>
+            //const socket = new WebSocket('ws://192.168.64.97:12345');
+            const socket = new WebSocket('ws://192.168.64.179:12345');
+            //const socket = new WebSocket('ws://192.168.64.215:12345');
+            //const socket = new WebSocket('ws://192.168.65.32:12345');
+
+            socket.onmessage = function(event) {
+              console.log('Message from server ', event.data);
+            };
+
+            socket.onerror = function(error) {
+              console.error('WebSocket Error: ', error);
+            };
+
+            socket.onclose = function(event) {
+              console.log('WebSocket Closed with code: ', event.code);
+            };
+
+
+            socket.onopen = function(event) {
+              //const message = { data: 'Hello Server!' }; // Création de la variable contenant les données à envoyer
+              socket.send(message.data); // Envoi des données au serveur
+            };
+
+            // Ouverture de la fenétre ! 
+            // Créer un élément de bouton 
+            var bouton = document.createElement("button");
+
+            // Ajouter du texte au bouton
+            bouton.innerHTML = "Ouverture Fenêtre";
+
+            // Ajouter une fonctionnalité au bouton
+            bouton.onclick = function() {
+              const message = { data: '0' }; // Mettre à jour la variable message.data
+              socket.send(message.data); // Envoi des données au serveur
+              alert("La fenêtre est ouverte !");
+            };
+            document.body.appendChild(bouton);
+            
+            var bouton = document.createElement("button");
+            bouton.innerHTML = "Fermeture Fenêtre";
+            bouton.onclick = function() {
+              const message = { data: '1' }; // Mettre à jour la variable message.data
+              socket.send(message.data); // Envoi des données au serveur
+              alert("La fenêtre est Fermé !");
+            };
+            document.body.appendChild(bouton);
+
+            //Ouvrir Arrosage 
+
+            var bouton = document.createElement("button");
+            bouton.innerHTML = "Ouverture Arrosage";
+            bouton.onclick = function() {
+              const message = { data: '2' }; // Mettre à jour la variable message.data
+              socket.send(message.data); // Envoi des données au serveur
+              alert("L'arrosage est activé");
+            };
+            document.body.appendChild(bouton);
+
+            var bouton = document.createElement("button");
+            bouton.innerHTML = "Fermeture Arrosage";
+            bouton.onclick = function() {
+              const message = { data: '3' }; // Mettre à jour la variable message.data
+              socket.send(message.data); // Envoi des données au serveur
+              alert("L'arrosage est désactivé  !");
+            };
+            document.body.appendChild(bouton);
+
+            //Allumer Chauffage 
+            
+            var bouton = document.createElement("button");
+            bouton.innerHTML = "Allumer Chauffage";
+            bouton.onclick = function() {
+              const message = { data: '4' }; // Mettre à jour la variable message.data
+              socket.send(message.data); // Envoi des données au serveur
+              alert("Le chauffage est allumé!");
+            };
+            document.body.appendChild(bouton);
+
+            var bouton = document.createElement("button");
+            bouton.innerHTML = "Eteindre Chauffage";
+            bouton.onclick = function() {
+              const message = { data: '5' }; // Mettre à jour la variable message.data
+              socket.send(message.data); // Envoi des données au serveur
+              alert("Le Chauffage est eteint !");
+            };
+            document.body.appendChild(bouton);
+
+            //Activer Brumisation 
+
+            var bouton = document.createElement("button");
+            bouton.innerHTML = "Activer Brumisation ";
+            bouton.onclick = function() {
+              const message = { data: '6' }; // Mettre à jour la variable message.data
+              socket.send(message.data); // Envoi des données au serveur
+              alert("La Brumisation est activé !");
+            };
+            document.body.appendChild(bouton);
+
+            var bouton = document.createElement("button");
+            bouton.innerHTML = "Désactiver Brumisation ";
+            bouton.onclick = function() {
+              const message = { data: '7' }; // Mettre à jour la variable message.data
+              socket.send(message.data); // Envoi des données au serveur
+              alert("La Brumisation est désactivé !");
+            };
+            document.body.appendChild(bouton);
+  
+          </script>
           <?php
           //si le bouton de modification a été utilisé
           if (isset($_POST["btnModif"])) {
@@ -88,5 +197,6 @@ include "classes/User.php"; ?>
           ?>
         </div>
       </div>
+    </div>
   </section>
 </body>
