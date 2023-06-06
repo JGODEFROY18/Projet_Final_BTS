@@ -5,12 +5,6 @@ TCW241::TCW241(QSettings* params)
     client = new QModbusTcpClient(this);
     client->setConnectionParameter(QModbusDevice::NetworkAddressParameter, params->value("TCW241/ip").toString());
     client->setConnectionParameter(QModbusDevice::NetworkPortParameter, params->value("TCW241/port").toInt());
-    /*if (client->connectDevice()) {
-        qDebug() << "connection tcw reussie \nip : " << params->value("TCW241/ip").toString() << "\nport : " << params->value("TCW241/port").toInt();
-    }
-    else {
-        qDebug("connection ratee");
-    }*/
     Relay1 = QModbusDataUnit(QModbusDataUnit::Coils, 100, 1);
     Relay2 = QModbusDataUnit(QModbusDataUnit::Coils, 101, 1);
     Relay3 = QModbusDataUnit(QModbusDataUnit::Coils, 102, 1);
