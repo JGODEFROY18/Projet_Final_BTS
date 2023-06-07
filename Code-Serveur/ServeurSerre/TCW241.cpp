@@ -75,6 +75,7 @@ QJsonValue TCW241::valeurJson(quint16* arr, char car)
 
 float TCW241::calculHumidite(float Vout)
 {
+    Vout *= 1000; //conversion V -> mV demande
     float humid = -1.91 * pow(10, -9) * pow(Vout, 3);
     humid += 1.33 * pow(10, -5) * pow(Vout, 2);
     humid += 9.56 * pow(10, -3) * Vout;
