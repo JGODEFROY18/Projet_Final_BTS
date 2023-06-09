@@ -26,6 +26,7 @@ void Poseidon2::resetCounterDebit()
     QByteArray trameEnvoi(trame, 17);
     socket->write(trameEnvoi);
 }
+
 //envoi de la trame de lecture
 void Poseidon2::trameTemperature()
 {
@@ -44,6 +45,11 @@ void Poseidon2::trameLevel()
 
 void Poseidon2::trameDebit()
 {
+    //input 2 : adresse 203
+    //char trameDeb[] = { 0x00, DEBIT_ID, 0x00, 0x00, 0x00, 0x06, 0x11, 0x04, 0x00, static_cast<char>(0xCB), 0x00, 0x01 };
+    //input 3 : adresse 205
+    //char trameDeb[] = { 0x00, DEBIT_ID, 0x00, 0x00, 0x00, 0x06, 0x11, 0x04, 0x00, static_cast<char>(0xCD), 0x00, 0x01 };
+    //input 4 : adresse 207
     char trameDeb[] = { 0x00, DEBIT_ID, 0x00, 0x00, 0x00, 0x06, 0x11, 0x04, 0x00, static_cast<char>(0xCF), 0x00, 0x01 };
     QByteArray trameEnvoiDeb(trameDeb, 12);
     socket->write(trameEnvoiDeb);

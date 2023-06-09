@@ -17,6 +17,9 @@ Serveur::Serveur()
     pos = new Poseidon2(params);
     chrono1 = new QTimer();
     chrono2 = new QTimer();
+    //
+    //conexion Websocket
+    //
     wSocketServer = new QWebSocketServer(QStringLiteral("Server WebSocket"), QWebSocketServer::NonSecureMode);
 
     if (this->wSocketServer->listen(QHostAddress::AnyIPv4, params->value("Websocket/port").toInt())) {
@@ -26,6 +29,9 @@ Serveur::Serveur()
     else {
         qDebug() << "Server WebSocket: Erreur d'ecoute sur le port" << params->value("Websocket/port").toInt();
     }
+    //
+    //Envoi en BDD
+    //
     QObject::connect(chrono1, SIGNAL(timeout()), this, SLOT(envoiBDD()));
     chrono1->start(600000); //toutes les 10 minutes, on stocke les donnees en BDD
 }
@@ -34,7 +40,8 @@ Serveur::~Serveur()
 {
 }
 
-void Serveur::createClient1() {
+void Serveur::createClient1()
+{
     client1->setConnectionParameter(QModbusDevice::NetworkAddressParameter, params->value("TCW241/ip").toString());
     client1->setConnectionParameter(QModbusDevice::NetworkPortParameter, params->value("TCW241/port").toInt());
     if (client1->connectDevice()) {
@@ -83,7 +90,8 @@ void Serveur::envoiBDD()
     );
 }
 
-void Serveur::modifJSon() {
+void Serveur::modifJSon()
+{
     int taille = donneesJson.size();
     QStringList cles = donneesJson.keys();
     for (int z = 0; z < taille; z++) {
@@ -110,7 +118,8 @@ void Serveur::wSocketConnected()
     chrono2->start(2000); //toutes les 2 secondes, on affiche les donnees sur le site
 }
 
-void Serveur::wSocketDeconnected() {
+void Serveur::wSocketDeconnected()
+{
     qDebug("Client deconnecte");
     QObject::disconnect(chrono2, SIGNAL(timeout()), this, SLOT(lecturedonnees()));
     chrono2->stop();
@@ -125,7 +134,8 @@ void Serveur::lecturedonnees()
     if (wSocket != nullptr) wSocket->sendTextMessage(data);
 }
 
-void Serveur::Donnees() {
+void Serveur::Donnees()
+{
     reponsecapt1 = client1->sendReadRequest(donneesSensor, 1);
     if (!reponsecapt1->isFinished()) {
         connect(reponsecapt1, SIGNAL(finished()), this, SLOT(DataSensor()));
@@ -167,8 +177,8 @@ void Serveur::trameTemperature()
     QModbusDataUnit donnees = reponsecapt3->result();
     quint16 temp = donnees.value(0);
     float arr = temp / 10.0;
-    QString rrrr = QString::number(double(arr), 'f', 1) + 0xB0 + "C";
-    donneesJson.insert("TempExt", rrrr);
+    QString stemp = QString::number(double(arr), 'f', 1) + 0xB0 + "C";
+    donneesJson.insert("TempExt", stemp);
     reponsecapt3->deleteLater();
     reponsecapt4 = client2->sendReadRequest(donneesLevel, 2);
     if (!reponsecapt4->isFinished()) {
@@ -206,20 +216,21 @@ void Serveur::chercheEau()
 void Serveur::trameDebit()
 {
     QModbusDataUnit donnees = reponsecapt5->result();
+    QJsonValue val = QString::number(donnees.value(0), 10) + " L";
     if (eau == true)
     {
-        donneesJson.insert("ConsoEauPluie", QString::number(donnees.value(0), 10));
-        donneesJson.insert("ConsoEauCourante", QString::number(0, 10));
+        donneesJson.insert("ConsoEauPluie", val);
+        donneesJson.insert("ConsoEauCourante", QString::number(0));
     }
     else if (eau == false)
     {
-        donneesJson.insert("ConsoEauPluie", QString::number(0, 10));
-        donneesJson.insert("ConsoEauCourante", QString::number(donnees.value(0), 10));
+        donneesJson.insert("ConsoEauPluie", QString::number(0));
+        donneesJson.insert("ConsoEauCourante", val);
     }
     else
     {
-        donneesJson.insert("ConsoEauPluie", QString::number(0, 10));
-        donneesJson.insert("ConsoEauCourante", QString::number(0, 10));
+        donneesJson.insert("ConsoEauPluie", QString::number(0));
+        donneesJson.insert("ConsoEauCourante", QString::number(0));
     }
     reponsecapt5->deleteLater();
 }

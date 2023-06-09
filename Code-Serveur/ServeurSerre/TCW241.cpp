@@ -63,6 +63,12 @@ QJsonValue TCW241::valeurJson(quint16* arr, char car)
     case 'H':
         *val = calculHumidite(*val);
     case 'h':
+        if(*val < 0.0f){
+            *val = 0.0f;
+        }
+        else if(*val > 100.0f){
+            *val = 100.0f;
+        }
         affichage = QString::number(double(*val), 'f', 1) + "%";
         break;
     default:
