@@ -56,9 +56,7 @@ include "classes/User.php"; ?>
       <div class="container">
         <div class="row centered">
           <script>
-            //const socket = new WebSocket('ws://192.168.64.97:12345');
             const socket = new WebSocket('ws://192.168.64.179:12345');
-            //const socket = new WebSocket('ws://192.168.64.215:12345');
             //const socket = new WebSocket('ws://192.168.65.32:12345');
 
             socket.onmessage = function(event) {
