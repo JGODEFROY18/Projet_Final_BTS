@@ -44,7 +44,8 @@ void Serveur::createClient1()
 {
     client1->setConnectionParameter(QModbusDevice::NetworkAddressParameter, params->value("TCW241/ip").toString());
     client1->setConnectionParameter(QModbusDevice::NetworkPortParameter, params->value("TCW241/port").toInt());
-    if (client1->connectDevice()) {
+    client1->connectDevice();
+    if (client1->state() == QModbusDevice::ConnectedState) {
         qDebug() << "connection tcw reussie \nip :" << params->value("TCW241/ip").toString() << "\nport :" << params->value("TCW241/port").toInt();
     }
     else {
@@ -56,7 +57,8 @@ void Serveur::createClient2()
 {
     client2->setConnectionParameter(QModbusDevice::NetworkAddressParameter, params->value("Poseidon2/ip").toString());
     client2->setConnectionParameter(QModbusDevice::NetworkPortParameter, params->value("Poseidon2/port").toInt());
-    if (client2->connectDevice()) {
+    client2->connectDevice();
+    if (client2->state() == QModbusDevice::ConnectedState) {
         qDebug() << "connection poseidon reussie \nip : " << params->value("Poseidon2/ip").toString() << "\nport : " << params->value("Poseidon2/port").toInt();
     }
     else {
