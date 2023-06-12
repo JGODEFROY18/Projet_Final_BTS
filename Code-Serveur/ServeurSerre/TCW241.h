@@ -1,3 +1,5 @@
+#ifndef TCW241_H
+#define TCW241_H
 #pragma once
 #include <QtCore/QCoreApplication>
 #include <QtDebug>
@@ -16,10 +18,6 @@ public:
     TCW241(QModbusTcpClient*);
     ~TCW241();
     QJsonValue valeurJson(quint16*, char);
-
-public slots:
-    void lecturesite(QString);
-    void actiondel();
     //fonctions pour allumer ou eteindre l'arrosoir
     void Relay1ON(); void Relay1OFF();
     //fonctions pour allumer ou eteindre la brumisation
@@ -29,6 +27,9 @@ public slots:
     //fonctions pour ouvrir ou fermer la fenetre
     void Relay4ON(); void Relay4OFF();
 
+public slots:
+    void actiondel();
+
 private:
     QJsonObject donneesJson;
     QModbusTcpClient* client;
@@ -37,3 +38,5 @@ private:
     QModbusReply* reponseact = nullptr;
     float calculHumidite(float);
 };
+
+#endif // TCW241_H

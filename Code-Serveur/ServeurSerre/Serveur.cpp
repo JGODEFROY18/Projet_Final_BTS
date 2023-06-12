@@ -114,8 +114,65 @@ void Serveur::wSocketConnected()
     wSocket->sendTextMessage("Bonjour Client");
     qDebug("Nouveau client connecte");
     QObject::connect(chrono2, SIGNAL(timeout()), this, SLOT(lecturedonnees()));
-    connect(wSocket, &QWebSocket::textMessageReceived, tcw, &TCW241::lecturesite);
+    connect(wSocket, &QWebSocket::textMessageReceived, this, &Serveur::lecturesite);
     chrono2->start(2000); //toutes les 2 secondes, on affiche les donnees sur le site
+}
+
+void Serveur::lecturesite(QString message){
+    qDebug()<<message;
+    int lec = message.toInt();
+    switch(lec){
+    case 0:
+        //ouverture fenetre
+        tcw->Relay4ON();
+        break;
+    case 1:
+        //fermeture fenetre
+        tcw->Relay4OFF();
+        break;
+    case 2:
+        //ouverture brumisation
+        tcw->Relay1ON();
+        //envoi de la requete de la temperature exterieure
+        reponsetrame1 = client2->sendReadRequest(donneesTemp, 2);
+        if (!reponsetrame1->isFinished()) {
+            connect(reponsetrame1, SIGNAL(finished()), this, SLOT(ActionTemperature()));
+        }
+        pos->reseauEau();
+        break;
+    case 3:
+        //fermeture brumisation
+        tcw->Relay1OFF();
+        pos->stopPump();
+        pos->eauPluie();
+        break;
+    case 4:
+        //ouverture chauffage
+        tcw->Relay3ON();
+        break;
+    case 5:
+        //fermeture chauffage
+        tcw->Relay3OFF();
+        break;
+    case 6:
+        //ouverture arrosage
+        tcw->Relay2ON();
+        //envoi de la requete de la temperature exterieure
+        reponsetrame1 = client2->sendReadRequest(donneesTemp, 2);
+        if (!reponsetrame1->isFinished()) {
+            connect(reponsetrame1, SIGNAL(finished()), this, SLOT(ActionTemperature()));
+        }
+        pos->reseauEau();
+        break;
+    case 7:
+        //fermeture arrosage
+        tcw->Relay2OFF();
+        pos->stopPump();
+        pos->eauPluie();
+        break;
+    default:
+        qDebug("Fonction non disponible");
+    }
 }
 
 void Serveur::wSocketDeconnected()
@@ -172,8 +229,35 @@ void Serveur::DataCapteurs()
     }
 }
 
+void Serveur::ActionTemperature()
+{
+    //reception de la requete de la temperature exterieure
+    QModbusDataUnit donnees = reponsetrame1->result();
+    quint16 temp = donnees.value(0);
+    float arr = temp / 10.0;
+    pos->setTemperature(arr);
+    reponsetrame1->deleteLater();
+    //envoi de la requete du niveau d'eau
+    reponsetrame2 = client2->sendReadRequest(donneesLevel, 2);
+    if (!reponsetrame2->isFinished()) {
+        connect(reponsetrame2, SIGNAL(finished()), this, SLOT(ActionLevel()));
+    }
+}
+
+void Serveur::ActionLevel()
+{
+    //reception de la requete du niveau d'eau
+    QModbusDataUnit donnees = reponsetrame2->result();
+    if (donnees.value(0) == 1)
+        pos->setLevel(true);
+    else
+        pos->setLevel(false);
+    reponsetrame2->deleteLater();
+}
+
 void Serveur::trameTemperature()
 {
+    //temperature exterieure
     QModbusDataUnit donnees = reponsecapt3->result();
     quint16 temp = donnees.value(0);
     float arr = temp / 10.0;
@@ -188,6 +272,7 @@ void Serveur::trameTemperature()
 
 void Serveur::trameLevel()
 {
+    //niveau d'eau
     QModbusDataUnit donnees = reponsecapt4->result();
     if (donnees.value(0) == 1)
         donneesJson.insert("NiveauEau", "Suffisant");
@@ -196,17 +281,18 @@ void Serveur::trameLevel()
     reponsecapt4->deleteLater();
     reponserelay = client2->sendReadRequest(relayEau, 3);
     if (!reponserelay->isFinished()) {
-        connect(reponserelay, SIGNAL(finished()), this, SLOT(chercheEau()));
+        connect(reponserelay, SIGNAL(finished()), this, SLOT(CapteurEau()));
     }
 }
 
-void Serveur::chercheEau()
+void Serveur::CapteurEau()
 {
     QModbusDataUnit donnees = reponserelay->result();
     if (donnees.value(0) == 1)
-        eau = true; //eau de pluie utilisee
+        eauPluie = true; //eau de pluie utilisee
     else
-        eau = false; //eau du reseau utilisee
+        eauPluie = false; //eau du reseau utilisee
+    reponserelay->deleteLater();
     reponsecapt5 = client2->sendReadRequest(donneesDebit, 3);
     if (!reponsecapt5->isFinished()) {
         connect(reponsecapt5, SIGNAL(finished()), this, SLOT(trameDebit()));
@@ -215,14 +301,15 @@ void Serveur::chercheEau()
 
 void Serveur::trameDebit()
 {
+    //debit d'eau
     QModbusDataUnit donnees = reponsecapt5->result();
     QJsonValue val = QString::number(donnees.value(0), 10) + " L";
-    if (eau == true)
+    if (eauPluie == true)
     {
         donneesJson.insert("ConsoEauPluie", val);
         donneesJson.insert("ConsoEauCourante", QString::number(0));
     }
-    else if (eau == false)
+    else if (eauPluie == false)
     {
         donneesJson.insert("ConsoEauPluie", QString::number(0));
         donneesJson.insert("ConsoEauCourante", val);

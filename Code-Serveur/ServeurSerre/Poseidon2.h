@@ -1,3 +1,5 @@
+#ifndef POSEIDON2_H
+#define POSEIDON2_H
 #pragma once
 #include <QtCore/QCoreApplication>
 #include <QtDebug>
@@ -16,6 +18,14 @@ class Poseidon2 : public QObject
 public:
     Poseidon2(QSettings*);
     ~Poseidon2();
+    void trameLevel();
+    void trameDebit();
+    void setTemperature(float temp){
+        this->temperature = temp;
+    }
+    void setLevel(bool niveau){
+        this->level = niveau;
+    }
 
 public slots:
 
@@ -34,7 +44,7 @@ private:
     bool level;
     float temperature;
     int state;
-    void trameLevel();
-    void trameDebit();
     bool eau;//eau de pluie->true et eau courante->false
 };
+
+#endif // POSEIDON2_H

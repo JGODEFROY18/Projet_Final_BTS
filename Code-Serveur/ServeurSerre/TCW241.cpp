@@ -1,4 +1,4 @@
-#include "tcw241.h"
+#include "TCW241.h"
 
 TCW241::TCW241(QModbusTcpClient* cli)
 {
@@ -12,37 +12,6 @@ TCW241::TCW241(QModbusTcpClient* cli)
 TCW241::~TCW241()
 {
     delete client;
-}
-
-void TCW241::lecturesite(QString message) {
-    switch (message.toInt()) {
-    case 0:
-        Relay4ON();
-        break;
-    case 1:
-        Relay4OFF();
-        break;
-    case 2:
-        Relay1ON();
-        break;
-    case 3:
-        Relay1OFF();
-        break;
-    case 4:
-        Relay3ON();
-        break;
-    case 5:
-        Relay3OFF();
-        break;
-    case 6:
-        Relay2ON();
-        break;
-    case 7:
-        Relay2OFF();
-        break;
-    default:
-        qDebug("Fonction non disponible");
-    }
 }
 
 QJsonValue TCW241::valeurJson(quint16* arr, char car)

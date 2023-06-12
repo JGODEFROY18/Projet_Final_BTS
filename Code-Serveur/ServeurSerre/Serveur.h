@@ -1,3 +1,5 @@
+#ifndef SERVEUR_H
+#define SERVEUR_H
 #pragma once
 #include "tcw241.h"
 #include "poseidon2.h"
@@ -28,16 +30,19 @@ public slots:
     void Donnees();
     void DataSensor();
     void DataCapteurs();
+    void ActionTemperature();
+    void ActionLevel();
     void trameTemperature();
     void trameLevel();
-    void chercheEau();
+    void CapteurEau();
     void trameDebit();
+    void lecturesite(QString);
 
 private:
     void createClient1();
     void createClient2();
     void modifJSon();
-    bool eau;//eau de pluie->true et eau courante->false
+    bool eauPluie;
     TCW241* tcw;
     Poseidon2* pos;
     QJsonObject donneesJson;
@@ -57,5 +62,7 @@ private:
     QModbusDataUnit donneesBacs, donneesSensor, donneesTemp, donneesLevel, donneesDebit, relayEau;
     //variable contenant les reponses avec les donnees des capteurs
     QModbusReply* reponsecapt1 = nullptr, * reponsecapt2 = nullptr, * reponsecapt3 = nullptr, * reponsecapt4 = nullptr, * reponsecapt5 = nullptr;
-    QModbusReply* reponserelay = nullptr;
+    QModbusReply* reponserelay = nullptr,* reponsetrame1 = nullptr,* reponsetrame2= nullptr;
 };
+
+#endif // SERVEUR_H
